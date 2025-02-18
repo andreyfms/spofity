@@ -1,1 +1,99 @@
 @import "tailwindcss";
+
+@layer components {
+
+  /* Global Reset */
+  * {
+    @apply box-border m-0 p-0;
+  }
+
+  /* Home Page */
+  .home {
+    @apply flex-1 ;
+  }
+
+  .home-title {
+    @apply font-bold text-7xl text-[#501462] text-center py-10;
+  }
+
+  /* Radio List */
+  .radio-list-title {
+    @apply text-3xl mt-5 font-semibold text-[#501462];
+  }
+
+  .search-container-list {
+    @apply relative shadow-xl rounded-2xl max-w-4xl mb-8 mt-12;
+  }
+
+  .search-icon {
+    @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
+  }
+
+  .search-icon-svg {
+    @apply h-5 w-5 text-[#501462] fill-current;
+  }
+
+  .search-input-list {
+    @apply block w-full pl-10 pr-3 py-2 border rounded-md placeholder-black focus:placeholder-gray-600 focus:outline-none border-[#501462] focus:bg-white sm:text-sm transition duration-150 ease-in-out;
+  }
+
+  .radio-list {
+    @apply bg-white/80 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white max-w-4xl mx-auto space-y-4 mb-8;
+  }
+
+  .radio-item {
+    @apply hover:bg-purple-50/50 transition-colors rounded-xl p-4;
+  }
+
+  .pagination {
+    @apply flex items-center justify-center gap-4 mt-8;
+  }
+
+  .pagination-btn {
+    @apply px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 bg-purple-100 text-purple-900 hover:bg-purple-200 disabled:cursor-not-allowed;
+  }
+
+  .pagination-info {
+    @apply text-purple-700 font-medium mx-4 min-w-[6rem] text-center;
+  }
+
+  /* RadioItem Component */
+  .radio-item {
+    @apply relative p-4 rounded shadow flex justify-between items-center border border-[#501462] hover:shadow-[#501462];
+}
+
+
+.radio-info {
+    @apply flex gap-4 items-center;
+}
+
+
+.title-radio-item {
+    @apply font-bold text-[#1a1d25];
+}
+
+.subtext {
+    @apply text-sm text-[#501462];
+}
+
+.radio-actions {
+    @apply flex gap-2 items-center;
+}
+
+.action-btn {
+    @apply flex p-2.5 rounded-xl transition-all duration-300 text-white cursor-pointer;
+}
+
+.edit-btn {
+    @apply bg-yellow-500 hover:rounded-3xl hover:bg-yellow-600;
+}
+
+.add-favorite-btn {
+    @apply bg-blue-500 hover:rounded-3xl hover:bg-blue-600;
+}
+
+.remove-favorite-btn {
+    @apply bg-red-500 hover:rounded-3xl hover:bg-red-600;
+}
+
+}
