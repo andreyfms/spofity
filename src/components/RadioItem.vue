@@ -1,13 +1,23 @@
 <template>
-  <div class="radio-item">
+  <div class="api-radio-item">
     <div class="radio-info">
       <button
+        @click.stop="handlePlayStop"
       >
-        <span>Play</span>
+        <span>
+          <svg class="animate-spin h-5 w-5 inline-block mx-auto" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+        </span>
+        <span >
+          Play
+        </span>
       </button>
-      <h3 class="title-radio-item">{{ radio.name }}</h3>
+      <h3 class="title-radio-item">{{ props.radio.name }}</h3>
       <p class="subtext">
-        {{ radio.country || '-' }} • {{ radio.language || '-' }}
+        {{ props.radio.country || '-' }} • {{ props.radio.language || '-' }}
       </p>
     </div>
     <div class="radio-actions">
@@ -27,7 +37,7 @@
             clip-rule="evenodd" />
         </svg>
       </button>
-      <button  class="action-btn remove-favorite-btn">
+      <button class="action-btn remove-favorite-btn">
         <!-- Ícone para remover favorito -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
           stroke="currentColor" class="h-6 w-6">
@@ -40,12 +50,21 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
+import audioManager from '@/composables/audioManager'
 
 const props = defineProps({
   radio: Object,
 })
 
 
+const { isPlaying, play, pause, stop } = audioManager();
+
+
+const handlePlayStop = () => {
+  play(props.radio.url_resolved)
+  stop()
+}
 </script>
 
 
