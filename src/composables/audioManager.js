@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 let instance = null;
 
-export default function useAudioPlayer() {
+export default function useAudioManager() {
   if (instance) return instance;
 
   const audio = ref(null);
@@ -49,9 +49,16 @@ export default function useAudioPlayer() {
     });
   };
 
+  const pause = () => {
+    if (audio.value && isPlaying.value) {
+      audio.value.pause();
+      isPlaying.value = false;
+    }
+  };
+
   const stop = () => {
     if (audio.value) {
-      audio.value.stop();
+      audio.value.pause();
       audio.value.currentTime = 0;
       isPlaying.value = false;
       audio.value = null;
@@ -63,6 +70,7 @@ export default function useAudioPlayer() {
     isPlaying,
     currentSrc,
     play,
+    pause,
     stop,
   };
 

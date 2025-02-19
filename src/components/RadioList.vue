@@ -16,7 +16,7 @@
     </div>
 
     <div class="radio-list">
-      <Radioitem v-for="radio in paginatedRadios" :key="radio.id" :radio="radio" @play="playRadio"
+      <RadioItem v-for="radio in paginatedRadios" :key="radio.id" :radio="radio" @play="playRadio"
         @addFavorite="addFavorite" @removeFavorite="removeFavorite" @edit="openEditModal" class="radio-item" />
     </div>
 
@@ -33,7 +33,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { fetchRadios } from '@/services/radioApi';
 import { useRadioStore } from '@/stores/radioStore';
-import Radioitem from '@/components/RadioItem.vue';
+import RadioItem from '@/components/RadioItem.vue';
 
 const radioStore = useRadioStore();
 const searchTerm = ref('');

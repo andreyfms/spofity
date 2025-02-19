@@ -1,5 +1,3 @@
-// feat: adiciona funcionalidades de favoritos e edição de rádios
-
 import { defineStore } from 'pinia'
 import { getStorageItem, setStorageItem } from '@/utils/storage'
 
@@ -39,15 +37,12 @@ export const useRadioStore = defineStore('radio', {
         r.stationuuid === updatedRadio.stationuuid ? updatedRadio : r
       )
 
-
       if (this.currentRadio && this.currentRadio.stationuuid === updatedRadio.stationuuid) {
         this.currentRadio = updatedRadio
       }
 
-
       this.editedRadios[updatedRadio.stationuuid] = updatedRadio
       setStorageItem('editedRadios', this.editedRadios)
-
       this.saveFavorites()
     },
     setCurrentRadio(radio) {
