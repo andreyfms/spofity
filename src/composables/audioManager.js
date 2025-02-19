@@ -61,7 +61,6 @@ export default function useAudioManager() {
       audio.value.pause();
       audio.value.currentTime = 0;
       isPlaying.value = false;
-      audio.value = null;
     }
   };
 
