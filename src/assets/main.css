@@ -8,12 +8,16 @@
   }
 
   /* Home Page */
+  .sidebar-home {
+    @apply flex min-h-screen;
+  }
+
   .home {
-    @apply flex-1 ;
+    @apply flex-1 bg-gradient-to-br from-cyan-100 to-indigo-100;
   }
 
   .home-title {
-    @apply font-bold text-7xl text-[#501462] text-center py-10;
+    @apply font-bold text-7xl text-[#501462] text-center mt-10;
   }
 
   /* Radio List */
@@ -53,47 +57,208 @@
     @apply px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 bg-purple-100 text-purple-900 hover:bg-purple-200 disabled:cursor-not-allowed;
   }
 
+  .pagination-btn.primary {
+    @apply bg-purple-900 text-white hover:bg-purple-800;
+  }
+
   .pagination-info {
     @apply text-purple-700 font-medium mx-4 min-w-[6rem] text-center;
   }
 
   /* RadioItem Component */
-  .radio-item {
+  .api-radio-item {
     @apply relative p-4 rounded shadow flex justify-between items-center border border-[#501462] hover:shadow-[#501462];
-}
+  }
 
+  .badge {
+    @apply absolute top-1 left-40 bg-teal-500 text-white px-2 py-1 text-xs font-bold rounded-full;
+  }
 
-.radio-info {
+  .radio-info {
     @apply flex gap-4 items-center;
-}
+  }
 
+  .play-button {
+    @apply text-white px-2 py-1 min-w-[60px] rounded transition cursor-pointer;
+  }
 
-.title-radio-item {
+  .title-radio-item {
     @apply font-bold text-[#1a1d25];
-}
+  }
 
-.subtext {
+  .subtext {
     @apply text-sm text-[#501462];
-}
+  }
 
-.radio-actions {
+  .radio-actions {
     @apply flex gap-2 items-center;
-}
+  }
 
-.action-btn {
+  .action-btn {
     @apply flex p-2.5 rounded-xl transition-all duration-300 text-white cursor-pointer;
-}
+  }
 
-.edit-btn {
+  .edit-btn {
     @apply bg-yellow-500 hover:rounded-3xl hover:bg-yellow-600;
-}
+  }
 
-.add-favorite-btn {
+  .add-favorite-btn {
     @apply bg-blue-500 hover:rounded-3xl hover:bg-blue-600;
-}
+  }
 
-.remove-favorite-btn {
+  .remove-favorite-btn {
     @apply bg-red-500 hover:rounded-3xl hover:bg-red-600;
-}
+  }
 
+  .radio-icon {
+    @apply h-6 w-6;
+  }
+
+  /* Sidebar */
+  .hamburger {
+    @apply fixed cursor-pointer p-2 rounded-full transition-colors shadow-lg bg-[#501462] hover:bg-[#3a0f47] z-50;
+  }
+
+  .hamburger-mobile {
+    @apply top-4 right-4 md:hidden;
+  }
+
+  .hamburger-desktop {
+    @apply top-4 left-4 hidden md:block;
+  }
+
+  .hamburger-icon {
+    @apply relative w-6 h-6;
+  }
+
+  .hamburger-span {
+    @apply block absolute top-1/2 text-[#8cf1da] h-0.5 w-6 bg-current transform transition duration-500 ease-in-out;
+  }
+
+  .sidebar {
+    @apply h-full p-6 shadow-xl bg-[#501462] fixed md:relative inset-y-0 z-40 min-w-full;
+  }
+
+  .sidebar-closed {
+    @apply transform translate-x-full;
+  }
+
+  .sidebar-open {
+    @apply transform translate-x-0;
+  }
+
+  .search-container {
+    @apply mt-10 relative w-2/3 mx-auto;
+  }
+
+  .search-inner {
+    @apply relative shadow-xl rounded-2xl max-w-4xl mb-8 mt-10;
+  }
+
+  .search-button {
+    @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
+  }
+
+  .search-input {
+    @apply w-full pl-10 pr-4 py-2 rounded-lg bg-white/10 focus:bg-white/5 text-[#8cf1da] placeholder-[#8cf1da]/50 focus:outline-none focus:ring-2 focus:ring-[#8cf1da] transition-all;
+  }
+
+  .favorites-container {
+    @apply flex-1 overflow-y-auto pr-2;
+  }
+
+  .favorite-item {
+    @apply flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-[#8cf1da] transition-colors;
+  }
+
+  /* Radio/Favorite Item (em listagem) */
+  .radio-container {
+    @apply cursor-pointer flex rounded-xl bg-white w-full border border-[#40798C] transition-all;
+  }
+
+  .radio-container:hover {
+    @apply bg-[#501462] text-[#8cf1da] border-[#8cf1da];
+  }
+
+  .radio-inner {
+    @apply flex items-center px-2 w-full justify-between;
+  }
+
+  .radio-title {
+    @apply font-bold max-w-full whitespace-normal;
+  }
+
+  .checkbox-wrapper {
+    @apply relative flex cursor-pointer items-center rounded-full p-3 justify-between;
+  }
+
+  .custom-checkbox {
+    @apply relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-[#8ba9a3] transition-all;
+  }
+
+  .custom-checkbox::before {
+    content: '';
+    @apply absolute top-1/2 left-1/2 block h-12 w-12 -translate-y-1/2 -translate-x-1/2 rounded-full bg-slate-500 opacity-0 transition-opacity;
+  }
+
+  .custom-checkbox:hover::before {
+    @apply opacity-10;
+  }
+
+  .custom-checkbox:checked {
+    @apply border-[#8cf1da] bg-[#501462];
+  }
+
+  .checkbox-icon {
+    @apply pointer-events-none absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-white opacity-0 transition-opacity;
+  }
+
+  .peer:checked+.checkbox-icon {
+    @apply opacity-100;
+  }
+
+  .checkbox-svg {
+    @apply h-3.5 w-3.5;
+  }
+
+  /* Modal Edit */
+  .modal-container {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+  }
+
+  .modal-content {
+    @apply bg-white rounded-lg p-6 w-11/12 md:w-1/2;
+  }
+
+  .modal-title {
+    @apply text-xl font-bold mb-4;
+  }
+
+  .modal-form-group {
+    @apply mb-4;
+  }
+
+  .modal-form-label {
+    @apply block mb-1;
+  }
+
+  .modal-form-input {
+    @apply w-full p-2 border rounded;
+  }
+
+  .modal-actions {
+    @apply flex justify-end gap-2;
+  }
+
+  .btn {
+    @apply px-4 py-2 text-white rounded;
+  }
+
+  .btn-cancel {
+    @apply bg-gray-500;
+  }
+
+  .btn-save {
+    @apply bg-blue-500;
+  }
 }

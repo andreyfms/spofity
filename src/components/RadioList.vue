@@ -10,13 +10,14 @@
               clip-rule="evenodd" />
           </svg>
         </div>
-        <input type="search" v-model="searchList" @keyup.enter="fetchRadios2" placeholder="Search stations"
+        <input type="search" v-model="searchTerm" @keyup.enter="fetchFilteredRadios" placeholder="Search stations"
           class="search-input-list">
       </div>
     </div>
 
     <div class="radio-list">
-      <RadioItem v-for="radio in radios" :key="radio.id" :radio="radio" class="radio-item" />
+      <Radioitem v-for="radio in paginatedRadios" :key="radio.id" :radio="radio" @play="playRadio"
+        @addFavorite="addFavorite" @removeFavorite="removeFavorite" @edit="openEditModal" class="radio-item" />
     </div>
 
     <div class="pagination">
@@ -29,46 +30,63 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { fetchRadios } from '../services/radioApi';
-import RadioItem from './RadioItem.vue';
+import { ref, computed, onMounted } from 'vue';
+import { fetchRadios } from '@/services/radioApi';
+import { useRadioStore } from '@/stores/radioStore';
+import Radioitem from '@/components/RadioItem.vue';
 
-const searchList = ref('');
+const radioStore = useRadioStore();
+const searchTerm = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 10;
-const radios = ref([]);
-const totalItems = ref(0);
+const emit = defineEmits(['open-edit']);
 
-const fetchData = async () => {
+
+const getSavedEdits = () => {
+  const savedEdits = localStorage.getItem('radioEdits');
+  return savedEdits ? JSON.parse(savedEdits) : {};
+};
+
+
+const mergeWithEdits = (radios, edits) => {
+  return radios.map(radio => {
+    if (edits[radio.id]) {
+      return { ...radio, ...edits[radio.id] };
+    }
+    return radio;
+  });
+};
+
+const fetchFilteredRadios = async () => {
   try {
-    const response = await fetchRadios( {name: searchList.value});
-    radios.value = response;
-    totalItems.value = response.length;
+    const params = searchTerm.value ? { name: searchTerm.value } : {};
+    const apiRadios = await fetchRadios(params);
+    const savedEdits = getSavedEdits();
+    const mergedRadios = mergeWithEdits(apiRadios, savedEdits);
+    radioStore.setApiRadios(mergedRadios);
+    currentPage.value = 1;
   } catch (error) {
-    console.error("Error fetching radios:", error);
+    console.error(error);
   }
 };
 
-const totalPages = computed(() => Math.ceil(totalItems.value / itemsPerPage));
+onMounted(fetchFilteredRadios);
 
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-    fetchData();
-  }
-};
+const orderedRadios = computed(() => radioStore.orderedAvailableRadios);
+const filteredRadios = computed(() => {
+  const term = searchTerm.value.toLowerCase();
+  return orderedRadios.value.filter(({ name, country, language }) =>
+    [name, country, language].some(field => field?.toLowerCase().includes(term))
+  );
+});
+const totalPages = computed(() => Math.ceil(filteredRadios.value.length / itemsPerPage));
+const paginatedRadios = computed(() => filteredRadios.value.slice((currentPage.value - 1) * itemsPerPage, currentPage.value * itemsPerPage));
 
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-    fetchData();
-  }
-};
-
-const fetchRadios2 = () => {
-  currentPage.value = 1;
-  fetchData();
-};
-
-onMounted(fetchData);
+const playRadio = (radio) => radioStore.setCurrentRadio(radio);
+const addFavorite = (radio) => radioStore.addFavorite(radio);
+const removeFavorite = ({ stationuuid }) => radioStore.removeFavorite(stationuuid);
+const openEditModal = (radio) => emit('open-edit', radio);
+const prevPage = () => { if (currentPage.value > 1) currentPage.value--; };
+const nextPage = () => { if (currentPage.value < totalPages.value) currentPage.value++; };
 </script>
+
