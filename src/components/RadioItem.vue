@@ -3,7 +3,7 @@
     <div v-if="isPlayingCard" class="badge">
       Current radio
     </div>
-    <div class="info">
+    <div class="radio-info">
       <button
         @click.stop="handlePlayStop"
         :disabled="isLoading"

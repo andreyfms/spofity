@@ -6,7 +6,7 @@
 # 📻 Spofity Radio 
 
 *"Porque a nostalgia do rádio merece um upgrade moderno!"*  
-
+- Projeto publicado na [vercel](https://spofity-six.vercel.app/).
 ---
 
 ## Visão Geral
